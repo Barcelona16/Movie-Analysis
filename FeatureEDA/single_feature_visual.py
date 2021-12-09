@@ -8,17 +8,17 @@ import pandas as pd
 
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 # DRAGONS
-import xgboost as xgb
-import lightgbm as lgb
-import catboost as cat
+# import xgboost as xgb
+# import lightgbm as lgb
+# import catboost as cat
 
-import ast
-from tqdm import tqdm
-from datetime import datetime
+# import ast
+# from tqdm import tqdm
+# from datetime import datetime
 
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import KFold, StratifiedKFold
@@ -45,7 +45,8 @@ test = pd.read_csv('../data/prediction/test.csv')
 
 print("Dimension of train : " + str(train.shape) + " || Dimension of test : " + str(test.shape))
 # print(train.head())
-
+# breakpoint()
+# fix data
 train.loc[train['id'] == 16, 'revenue'] = 192864
 train.loc[train['id'] == 90, 'budget'] = 30000000
 train.loc[train['id'] == 118, 'budget'] = 60000000
@@ -181,12 +182,16 @@ test.loc[test['id'] == 6842, 'budget'] = 30
 # external data
 release_dates = pd.read_csv('../data/prediction/release_dates_per_country.csv')
 release_dates['id'] = range(1, 7399)
+# del extra data
 release_dates.drop(['original_title', 'title'], axis=1, inplace=True)
 # release_dates.index = release_dates['id']
-print(release_dates.head())
+# print(release_dates.head())
 print(train.head())
+
 train = pd.merge(train, release_dates, how='left', on=['id'])
 test = pd.merge(test, release_dates, how='left', on=['id'])
+
+print(train.head())
 
 trainAdditionalFeatures = pd.read_csv('../data/prediction/TrainAdditionalFeatures.csv')[
     ['imdb_id', 'popularity2', 'rating']]
@@ -197,6 +202,8 @@ train = pd.merge(train, trainAdditionalFeatures, how='left', on=['imdb_id'])
 test = pd.merge(test, testAdditionalFeatures, how='left', on=['imdb_id'])
 
 print(train.head())
+# 合并完毕了
+breakpoint()
 
 '''
 ### 计算了训练集中的相关系数
