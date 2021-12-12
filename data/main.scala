@@ -2,7 +2,7 @@
 val movieRDD = sc.textFile("tmdb_5000_movies.csv")
 
 
-
+// lamda 匹配的是， 忽略”“内的，
 val budgetData = movieRDD.map(_.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)",-1)).map(x => (x(0), x(6)))
 val languageData = movieRDD.map(_.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)",-1)).map(x => (x(5), x(6)))
 val popularityData = movieRDD.map(_.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)",-1)).map(x => (x(8), x(6)))

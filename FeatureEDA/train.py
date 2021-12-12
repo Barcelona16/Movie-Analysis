@@ -21,6 +21,8 @@ def xgb_model(X_train, y_train, X_val, y_val, X_test, verbose):
               }
 
     record = dict()
+    print(X_train.describe())
+    print(X_train.isnull().any())
     model = xgb.train(params
                       , xgb.DMatrix(X_train, y_train)
                       , 100000
@@ -98,10 +100,10 @@ def cat_model(X_train, y_train, X_val, y_val, X_test, verbose):
 
 
 if __name__ == '__main__':
-    X_train_p = pd.read_csv('./X_train.csv')
-    X_test = pd.read_csv('./X_test.csv')
-    y_train_p = pd.read_csv('./y_train.csv')
-    random_seed = 2019
+    X_train_p = pd.read_csv('../data/prediction/X_train.csv')
+    X_test = pd.read_csv('../data/prediction/X_test.csv')
+    y_train_p = pd.read_csv('../data/prediction/y_train.csv')
+    random_seed = 2021
     k = 10
     fold = list(KFold(k, shuffle=True, random_state=random_seed).split(X_train_p))
     np.random.seed(random_seed)

@@ -12,7 +12,7 @@ import sys
 # sys.setdefaultencoding('utf-8')
 
 # DRAGONS
-# import xgboost as xgb
+import xgboost as xgb
 # import lightgbm as lgb
 # import catboost as cat
 
@@ -202,6 +202,7 @@ train = pd.merge(train, trainAdditionalFeatures, how='left', on=['imdb_id'])
 test = pd.merge(test, testAdditionalFeatures, how='left', on=['imdb_id'])
 
 print(train.head())
+print(train.info())
 # 合并完毕了
 breakpoint()
 
