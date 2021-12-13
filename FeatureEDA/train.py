@@ -21,8 +21,8 @@ def xgb_model(X_train, y_train, X_val, y_val, X_test, verbose):
               }
 
     record = dict()
-    print(X_train.describe())
-    print(X_train.isnull().any())
+    # print(X_train.describe())
+    # print(X_train.isnull().any())
     model = xgb.train(params
                       , xgb.DMatrix(X_train, y_train)
                       , 100000
@@ -67,6 +67,7 @@ def lgb_model(X_train, y_train, X_val, y_val, X_test, verbose):
                       , early_stopping_rounds=500
                       , callbacks=[lgb.record_evaluation(record)]
                       )
+    # print(record)
     best_idx = np.argmin(np.array(record['valid_0']['rmse']))
 
     val_pred = model.predict(X_val, num_iteration=model.best_iteration)
@@ -93,9 +94,10 @@ def cat_model(X_train, y_train, X_val, y_val, X_test, verbose):
 
     val_pred = model.predict(X_val)
     test_pred = model.predict(X_test)
-
+    # print(model.get_best_score())
+    # breakpoint()
     return {'val': val_pred, 'test': test_pred,
-            'error': model.get_best_score()['validation_0']['RMSE'],
+            'error': model.get_best_score()['validation']['RMSE'],
             'importance': model.get_feature_importance()}
 
 

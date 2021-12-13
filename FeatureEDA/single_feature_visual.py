@@ -204,7 +204,6 @@ test = pd.merge(test, testAdditionalFeatures, how='left', on=['imdb_id'])
 print(train.head())
 print(train.info())
 # 合并完毕了
-breakpoint()
 
 '''
 ### 计算了训练集中的相关系数
@@ -280,12 +279,13 @@ plt.savefig('./figures/revenue_language.png')
 
 # 投资与年份
 
-# print(train[(train['release_year'].isin(train['release_year'].value_counts()[:67].index.values))].head())
-# print(train['release_year'].value_counts().index)
+print(train[(train['release_year'].isin(train['release_year'].value_counts()[:67].index.values))].head())
+print(train['release_year'].value_counts().index)
+
 
 (sns.FacetGrid(train[(train['release_year']\
                         .isin(train['release_year']\
-                              .value_counts()[:5].index.values))],
+                              .value_counts()[15:20].index.values))],
                hue='release_year', height=5, aspect=2)
   .map(sns.kdeplot, 'budget', shade=True)
  .add_legend()
